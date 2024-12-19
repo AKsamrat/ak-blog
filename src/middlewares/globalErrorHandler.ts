@@ -22,10 +22,8 @@ type TErrorResponse = {
 }
 
 export const globalErrorHandler = (err: any, req: Request, res: Response, _next: NextFunction) => {
-    if (err.name && err.name === "ZodError") {
-        handlerZodError(err, res)
-    }
-    else if (err instanceof mongoose.Error.CastError) {
+
+    if (err instanceof mongoose.Error.CastError) {
         handleCastError(err, res)
     }
     else if (err instanceof mongoose.Error.ValidationError) {

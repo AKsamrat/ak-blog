@@ -9,6 +9,7 @@ import auth from '../../middlewares/auth'
 const userRouter = Router()
 
 userRouter.post('/register', validateRequest(UserValidation.userValidationSchema), userController.createUser)
+userRouter.post('/login', validateRequest(UserValidation.userValidationSchema), userController.loginUser)
 userRouter.get('/:userId', userController.getSingleUser)
 userRouter.put('/:userId', userController.updateUser)
 userRouter.delete('/:userId', userController.deleteUser)

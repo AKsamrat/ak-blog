@@ -26,6 +26,17 @@ const createUser = catchAsync(
 
     )
   })
+const loginUser = catchAsync(async (req, res) => {
+  const result = await userService.loginUser(req.body);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.ACCEPTED,
+    success: true,
+    message: "User logged in successfully",
+    token: result?.token,
+    data: result?.user
+  })
+})
 
 const getUser = catchAsync(async (req, res) => {
   const result = await userService.getUser()
@@ -79,6 +90,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
 export const userController = {
   createUser,
+  loginUser,
   getUser,
   getSingleUser,
   updateUser,

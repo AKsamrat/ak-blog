@@ -1,9 +1,9 @@
-import { Types } from "mongoose"
+
 import { USER_ROLE } from "./user.constants"
 
 export interface IUser {
   _id?: string
-  name: string
+  name?: string
   email: string
   password: string
   role: 'user' | 'admin'

@@ -8,7 +8,6 @@ const userSchema = new Schema<IUser>({
 
   name: {
     type: String,
-    required: [true, 'Please provide your name'],
     minlength: 3,
     maxlength: 50,
   },
