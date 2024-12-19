@@ -21,12 +21,19 @@ const createBlog = catchAsync(
     payload.author = decoded.id;
     // payload = [...payload, userId];
     const result = await blogService.createBlog(payload)
+    const resData = {
+      _id: result?._id,
+      title: result?.title,
+      content: result?.content,
+      author: result?.author,
+
+    }
 
     sendResponse(res, {
-      statusCode: StatusCodes.CREATED,
+      statusCode: StatusCodes.OK,
       success: true,
-      message: 'Blog posted successfully',
-      data: result
+      message: 'Blog created successfully',
+      data: resData
     }
     )
   })
@@ -37,11 +44,19 @@ const updateBlog = catchAsync(
     const body = req.body
     const result = await blogService.updateBlog(id, body)
 
+    const resData = {
+      _id: result?._id,
+      title: result?.title,
+      content: result?.content,
+      author: result?.author,
+
+    }
+
     sendResponse(res, {
       statusCode: StatusCodes.CREATED,
       success: true,
-      message: 'Blog posted successfully',
-      data: result
+      message: 'Blog updated successfully',
+      data: resData
     }
     )
 
@@ -55,9 +70,23 @@ const deleteBlog = catchAsync(
     const result = await blogService.deleteBlog(id)
 
     sendResponse(res, {
-      statusCode: StatusCodes.CREATED,
+      statusCode: StatusCodes.OK,
       success: true,
-      message: 'Blog posted successfully',
+      message: 'Blog deleted successfully',
+      data: ''
+    }
+    )
+
+  }
+)
+const getALlBlog = catchAsync(
+  async (req, res) => {
+    const result = await blogService.getAllBlog(req.query)
+
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: 'Blog retrived successfully',
       data: result
     }
     )
@@ -67,5 +96,6 @@ const deleteBlog = catchAsync(
 export const blogController = {
   createBlog,
   updateBlog,
-  deleteBlog
+  deleteBlog,
+  getALlBlog
 }

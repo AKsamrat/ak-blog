@@ -11,7 +11,7 @@ const createBlog = async (payload: IBlog) => {
 const updateBlog = async (id: string, data: IBlog) => {
   const result = await Blog.findByIdAndUpdate(id, data, {
     new: true,
-  })
+  }).populate('author')
   return result
 }
 
@@ -19,13 +19,16 @@ const deleteBlog = async (id: string) => {
   const result = await Blog.findByIdAndDelete(id)
   return result
 }
-const getBlog = async (query: Record<string, unknown>) => {
+const getAllBlog = async (query: Record<string, unknown>) => {
 
 
   const searchableFields = ["title", "content"];
-  const tours = new QueryBuilder(Blog.find(), query).search(searchableFields).filter().sort().paginate().select();
+  const blogs = new QueryBuilder(Blog.find(), query).search(searchableFields).filter().sort();
 
-  const result = await tours.modelQuery;
+  const result = await blogs.modelQuery;
+  // const result = await Blog.find();
+
+  console.log(result);
   return result;
 }
 
@@ -34,5 +37,5 @@ export const blogService = {
   createBlog,
   updateBlog,
   deleteBlog,
-  getBlog
+  getAllBlog
 }

@@ -11,7 +11,7 @@ const app = express()
 // middleware
 app.use(express.json())
 
-// app.use('/api/auth', authRouter)
+app.use('/api/admin', userRouter)
 app.use('/api/auth', userRouter)
 app.use('/api/blogs', blogRouters)
 

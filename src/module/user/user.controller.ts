@@ -76,15 +76,15 @@ const updateUser = catchAsync(async (req, res) => {
   })
 })
 
-const deleteUser = catchAsync(async (req, res) => {
+const blockUser = catchAsync(async (req, res) => {
   const userId = req.params.userId
-  await userService.deleteUser(userId)
+  await userService.blockUser(userId)
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'user deleted successfully',
-    data: {},
+    message: 'user blocked successfully',
+    data: '',
   })
 })
 
@@ -94,5 +94,5 @@ export const userController = {
   getUser,
   getSingleUser,
   updateUser,
-  deleteUser,
+  blockUser,
 }

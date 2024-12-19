@@ -9,21 +9,29 @@ class QueryBuilder<T> {
   }
 
   search(searchableFields: string[]) {
-    const searchTerm = this?.query?.searchTerm
-    this.modelQuery = this.modelQuery.find({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      $or: searchableFields.map((field: any) => ({
-        [field]: { $regex: searchTerm, $options: 'i' },
-      })),
-    } as FilterQuery<T>)
+    const search = this?.query?.search
 
+    console.log(searchableFields, search)
+    if (search) {
+
+      this.modelQuery = this.modelQuery.find({
+        $or: searchableFields.map((field) => ({
+          [field]: { $regex: search, $options: 'i' }
+        }) as FilterQuery<T>,
+        ),
+      })
+
+
+
+    }
+    // console.log(this)
     return this
   }
 
   filter() {
     const queryObj = { ...this.query }
     const excludingImportant = [
-      'searchTerm',
+      'search',
       'page',
       'limit',
       'sortOrder',
@@ -31,7 +39,6 @@ class QueryBuilder<T> {
       'fields',
     ]
 
-    // jesob field amdr filtering a drkr nei sesob baad dicchi
     excludingImportant.forEach((key) => delete queryObj[key])
 
     this.modelQuery = this.modelQuery.find(queryObj);
@@ -39,16 +46,7 @@ class QueryBuilder<T> {
     return this;
   }
 
-  paginate() {
-    const page = Number(this?.query?.page) || 1
-    const limit = Number(this?.query?.limit) || 10
-    // skip = (page-1)*limit
-    const skip = (page - 1) * limit
 
-    this.modelQuery = this.modelQuery.skip(skip).limit(limit)
-
-    return this
-  }
 
   sort() {
     let sortStr
@@ -65,17 +63,8 @@ class QueryBuilder<T> {
     return this
   }
 
-  select() {
-    let fields = '-__v'
 
-    if (this?.query?.fields) {
-      fields = (this?.query.fields as string)?.split(',').join(' ')
-    }
 
-    this.modelQuery = this.modelQuery.select(fields)
-
-    return this
-  }
 }
 
 
