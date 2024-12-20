@@ -14,12 +14,9 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     // checking if the given token is valid
-    const decoded = jwt.verify(
-      token,
-      "secret",
-    ) as JwtPayload;
+    const decoded = jwt.verify(token, 'secret') as JwtPayload;
 
-    console.log({ decoded })
+    console.log({ decoded });
 
     const { role, email } = decoded;
 
@@ -27,20 +24,18 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new Error('This user is not found !')
+      throw new Error('This user is not found !');
     }
 
     // checking if the user is inactive
-    const userStatus = user?.userStatus
+    const userStatus = user?.userStatus;
 
     if (userStatus === 'inactive') {
-      throw new Error('This user is blocked ! !')
+      throw new Error('This user is blocked ! !');
     }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
-      throw new Error(
-        'You are not authorized',
-      );
+      throw new Error('You are not authorized');
     }
 
     req.user = decoded as JwtPayload;

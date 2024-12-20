@@ -1,60 +1,60 @@
-import { model, Schema } from 'mongoose'
-import { IUser } from './user.interface'
+import { model, Schema } from 'mongoose';
+import { IUser } from './user.interface';
 
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      minlength: 3,
+      maxlength: 50,
+    },
 
-  name: {
-    type: String,
-    minlength: 3,
-    maxlength: 50,
-  },
-
-  email: {
-    type: String,
-    required: [true, 'Please provide your email'],
-    unique: true,
-    validate: {
-      validator: function (value: string) {
-        return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
+    email: {
+      type: String,
+      required: [true, 'Please provide your email'],
+      unique: true,
+      validate: {
+        validator: function (value: string) {
+          return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value);
+        },
+        message: '{VALUE} is not a valid email',
       },
-      message: '{VALUE} is not a valid email',
+      immutable: true,
     },
-    immutable: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    select: false,
-  },
-
-  role: {
-    type: String,
-    enum: {
-      values: ['user', 'admin'],
-      message: '{VALUE} is not valid, please provide a valid role',
+    password: {
+      type: String,
+      required: true,
+      select: false,
     },
-    default: 'user',
 
+    role: {
+      type: String,
+      enum: {
+        values: ['user', 'admin'],
+        message: '{VALUE} is not valid, please provide a valid role',
+      },
+      default: 'user',
+    },
+
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
+
+    userStatus: {
+      type: String,
+      enum: ['active', 'inactive'],
+      required: true,
+      default: 'active',
+    },
   },
-
-  isBlocked: {
-    type: Boolean,
-    default: false,
+  {
+    timestamps: true,
   },
-
-  userStatus: {
-    type: String,
-    enum: ['active', 'inactive'],
-    required: true,
-    default: 'active',
-  }
-}, {
-  timestamps: true
-
-})
+);
 
 // hook -> pre
 // userSchema.pre('find', function (this, next) {
@@ -88,5 +88,5 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-const User = model<IUser>('User', userSchema)
-export default User
+const User = model<IUser>('User', userSchema);
+export default User;

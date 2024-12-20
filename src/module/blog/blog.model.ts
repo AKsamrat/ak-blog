@@ -1,5 +1,5 @@
-import { model, Schema } from "mongoose";
-import { IBlog } from "./blog.interface";
+import { model, Schema } from 'mongoose';
+import { IBlog } from './blog.interface';
 
 const blogSchema = new Schema<IBlog>(
   {
@@ -24,7 +24,7 @@ const blogSchema = new Schema<IBlog>(
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields
-  }
+  },
 );
-const Blog = model<IBlog>('Blog', blogSchema)
-export default Blog
+const Blog = model<IBlog>('Blog', blogSchema);
+export default Blog;
