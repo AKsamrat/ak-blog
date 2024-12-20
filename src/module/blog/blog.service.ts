@@ -21,14 +21,13 @@ const deleteBlog = async (id: string) => {
 }
 const getAllBlog = async (query: Record<string, unknown>) => {
 
-
   const searchableFields = ["title", "content"];
   const blogs = new QueryBuilder(Blog.find(), query).search(searchableFields).filter().sort();
 
   const result = await blogs.modelQuery;
   // const result = await Blog.find();
 
-  console.log(result);
+  // console.log(result);
   return result;
 }
 

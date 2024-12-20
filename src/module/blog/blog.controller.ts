@@ -3,8 +3,8 @@ import catchAsync from "../../utils/catchAsync"
 import sendResponse from "../../utils/sendResponse"
 import { blogService } from "./blog.service"
 import jwt, { JwtPayload } from 'jsonwebtoken';
-const createBlog = catchAsync(
 
+const createBlog = catchAsync(
   async (req, res) => {
     let payload = req.body
     const token = req.headers.authorization;

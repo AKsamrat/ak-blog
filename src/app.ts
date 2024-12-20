@@ -37,6 +37,3 @@ app.use("*", (req: Request, res: Response) => {
 
 export default app
 
-// req, res > jwt funtion next() > function 
-// express -> workflow = 
-// train -> [router]-[controller -error]-[service - error]-[errorHandler]->
