@@ -63,7 +63,14 @@ const deleteBlog = catchAsync(async (req, res) => {
   });
 });
 const getALlBlog = catchAsync(async (req, res) => {
-  const result = await blogService.getAllBlog(req.query);
+  const { search, sortBy = 'createdAt', sortOrder = 'desc', filter } = req.query;
+
+  // Build query object
+  const query: Record<string, any> = {};
+  if (filter) {
+    query.author = filter; // Assuming `author` is the field in your Blog model
+  }
+  const result = await blogService.getAllBlog(query);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,

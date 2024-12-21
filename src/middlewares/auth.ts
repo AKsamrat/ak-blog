@@ -7,7 +7,16 @@ import { TUserRole } from '../module/user/user.interface';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    let authHeader = req.headers['authorization'];
+    const match = authHeader?.match(/^Bearer\s+(.+)$/);
+    if (!match) {
+      res.status(401).json({ message: 'Invalid token format,You are not authorized!' });
+      return;
+    }
+
+    const token = match[1];
+
+    // console.log('token', token, authHeader)
     // checking if the token is missing
     if (!token) {
       throw new Error('You are not authorized!');
@@ -16,7 +25,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     // checking if the given token is valid
     const decoded = jwt.verify(token, 'secret') as JwtPayload;
 
-    console.log({ decoded });
+    // console.log({ decoded });
 
     const { role, email } = decoded;
 

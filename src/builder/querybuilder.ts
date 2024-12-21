@@ -27,14 +27,13 @@ class QueryBuilder<T> {
   }
 
   filter() {
+
     const queryObj = { ...this.query };
     const excludingImportant = [
       'search',
-      'page',
-      'limit',
       'sortOrder',
       'sortBy',
-      'fields',
+
     ];
 
     excludingImportant.forEach((key) => delete queryObj[key]);
@@ -50,7 +49,7 @@ class QueryBuilder<T> {
     if (this?.query?.sortBy && this?.query?.sortOrder) {
       const sortBy = this?.query?.sortBy;
       const sortOrder = this?.query?.sortOrder;
-      // "-price" othoba "price"
+
       sortStr = `${sortOrder === 'desc' ? '-' : ''}${sortBy}`;
     }
 

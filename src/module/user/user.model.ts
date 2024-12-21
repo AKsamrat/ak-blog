@@ -56,18 +56,15 @@ const userSchema = new Schema<IUser>(
   },
 );
 
-// hook -> pre
-// userSchema.pre('find', function (this, next) {
-//   this.find({ userStatus: { $eq: 'active' } })
-//   next()
-// })
+userSchema.pre('find', function (next) {
+  this.find({ isBlocked: { $ne: true } });
+  next();
+});
 
-// userSchema.post('find', function (docs, next) {
-//   docs.forEach((doc: IUser) => {
-//     doc.name = doc.name.toUpperCase()
-//   })
-//   next()
-// })
+userSchema.pre('findOne', function (next) {
+  this.find({ isBlocked: { $ne: true } });
+  next();
+});
 
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
