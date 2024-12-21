@@ -2,7 +2,7 @@
 
 ### <code style="color:aqua">Live Link :</code>
 ```bash
-npm install
+https://ak-blog.vercel.app
 ```
 ### <code style="color:aqua">Features  :</code>
 1.Typescript
