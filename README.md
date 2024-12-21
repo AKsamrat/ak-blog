@@ -4,7 +4,7 @@
 ```bash
 https://ak-blog.vercel.app
 ```
-### <code style="color:aqua">Features  :</code>
+### <code style="color:aqua">Technology  :</code>
 1.Typescript
 2.Nodejs
 3.Mongodb
