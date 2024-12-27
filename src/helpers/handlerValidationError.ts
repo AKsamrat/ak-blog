@@ -15,5 +15,6 @@ export const handleValidationError = (err: any, res: Response) => {
     message: err.message,
     issues: issues,
     error: err,
+    stack: err.stack,
   });
 };

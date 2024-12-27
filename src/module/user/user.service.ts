@@ -37,7 +37,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
   if (!isPasswordMatched) {
     throw new AppError(
       StatusCodes.FORBIDDEN,
-      'Invalid Credential or Password? 😈',
+      'Invalid Credential or Password? ',
     );
   }
 

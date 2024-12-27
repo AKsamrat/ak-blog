@@ -10,7 +10,9 @@ import { handleValidationError } from '../helpers/handlerValidationError';
 type TErrorResponse = {
   success: boolean;
   message: string;
+  statusCode: number;
   error: any;
+  stack: string;
 };
 
 export const globalErrorHandler = (

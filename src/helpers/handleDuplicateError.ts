@@ -5,7 +5,9 @@ import { StatusCodes } from 'http-status-codes';
 export const handlerDuplicateError = (err: any, res: Response) => {
   res.status(StatusCodes.CONFLICT).json({
     status: false,
-    message: err.message,
+    statusCode: 409,
+    message: err.errmsg,
     error: err,
+    stack: err.stack,
   });
 };

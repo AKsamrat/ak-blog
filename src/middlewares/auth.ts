@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable prettier/prettier */
 import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
@@ -16,7 +18,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     const token = match[1];
 
-    // console.log('token', token, authHeader)
+    console.log('token', token, authHeader)
     // checking if the token is missing
     if (!token) {
       throw new Error('You are not authorized!');
@@ -25,7 +27,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     // checking if the given token is valid
     const decoded = jwt.verify(token, 'secret') as JwtPayload;
 
-    // console.log({ decoded });
+    console.log({ decoded });
 
     const { role, email } = decoded;
 

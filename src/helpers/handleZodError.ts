@@ -14,5 +14,6 @@ export const handlerZodError = (err: any, res: Response) => {
     message: err.message,
     issues: issues,
     error: err,
+    stack: err.stack,
   });
 };

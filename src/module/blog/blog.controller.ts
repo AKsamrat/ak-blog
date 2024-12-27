@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
@@ -6,11 +8,14 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const createBlog = catchAsync(async (req, res) => {
   const payload = req.body;
-  const token = req.headers.authorization;
-  // checking if the token is missing
-  if (!token) {
-    throw new Error('You are not authorized!');
+  let authHeader = req.headers['authorization'];
+  const match = authHeader?.match(/^Bearer\s+(.+)$/);
+  if (!match) {
+    res.status(401).json({ message: 'Invalid token format,You are not authorized!' });
+    return;
   }
+
+  const token = match[1];
 
   // checking if the given token is valid
   const decoded = jwt.verify(token, 'secret') as JwtPayload;
@@ -67,10 +72,11 @@ const getALlBlog = catchAsync(async (req, res) => {
 
   // Build query object
   const query: Record<string, any> = {};
-  if (filter) {
-    query.author = filter; // Assuming `author` is the field in your Blog model
-  }
-  const result = await blogService.getAllBlog(query);
+  // console.log(req.query);
+  // if (filter) {
+  //   req.query.author = filter; // Assuming `author` is the field in your Blog model
+  // }
+  const result = await blogService.getAllBlog(req.query);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,

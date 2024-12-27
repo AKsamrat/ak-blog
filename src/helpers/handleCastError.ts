@@ -5,6 +5,8 @@ export const handleCastError = (err: any, res: Response) => {
   res.status(400).json({
     success: false,
     message: err.message,
+    // statusCode:err.statusCode,
     error: err,
+    stack: err.stack,
   });
 };
